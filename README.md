@@ -1,0 +1,2 @@
+# SP23_ECE220_Honors_bakryha2
+This repository will contain all the files and code needed to run the program "Tailored Itinerary". This program creates custom itineraries for trips to Egypt based on some user input, which includes the time they want to visit and activities they would like to do. After that, a user is able to buy a trip by inputting one of the itineraries they have created, where the total cost will be calculated based on some variables like length of trip and number of activities. A user may also refund a purchased trip if the trip date has not come yet.
