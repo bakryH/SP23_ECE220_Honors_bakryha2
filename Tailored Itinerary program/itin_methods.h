@@ -13,8 +13,10 @@ class itinerary {
     void purchase_itinerary();
     void refund_itinerary();
     string file_name;
-    
+    private:
+    int flag_to_verify_purchase;
 };
 
 void listfiles(string folder);
+
 #endif

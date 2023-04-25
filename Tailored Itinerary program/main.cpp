@@ -41,7 +41,7 @@ else if (input==3) {
     itinerary purchase_itinerary(input_file);
 }
 else if (input==4) {
-
+    itinerary cancel_itinerary();
 }
 else if (input==9) {return 0;}
 else {cout<<"Please choose one of the above options.";}
