@@ -10,8 +10,11 @@ using namespace std;
 itinerary::itinerary (){
 
     // will need tons of helper functions. Definitely most difficult function to write. 
+    // Consider renaming and making this set filename to zero
 
 }
+
+
 
 itinerary::itinerary (string file){
     file_name = file;
@@ -78,6 +81,23 @@ int itinerary::calculate_price(){
     cout << "The Total Cost For This Trip With All Inclusions Listed in";
     cout << "the Itinerary Will be: $"<< price <<endl;
 
+}
+
+int itinerary::file_existence_check(){
+    ifstream file;
+    file.open("/Itinerary/"+file_name);
+    if (file.is_open()){
+        file.close();
+        return 1;
+    }
+    else {
+        file.close();
+        return 0;
+    }
+}
+
+void itinerary::set_file_name(string file_){
+    file_name = file_;
 }
 
 /* Other Functions */

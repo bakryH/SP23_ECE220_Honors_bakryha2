@@ -26,9 +26,9 @@ do
 {
 cin >> input;
 if (input==1) {itinerary new_itinerary();}
-else if (input==2) {
+else if (input==2) { // implement in the way input 3 code is handled to take care of incorrect inputs
     cout << "Please Input an Exisitng File Name to View.\n";
-    cout << "Available files:\n";
+    cout << "Available files: ";
     listfiles("/Itineraries");
     cout << "View : ";
     cin >> input_file;
@@ -36,13 +36,27 @@ else if (input==2) {
     template_itinerary.view_itinerary();
     }
 else if (input==3) {
-    cout << "Please Input an Exisitng File Name to Make a Purchase.\n";
-    cout << "Available files:\n";
-    listfiles("/Itineraries");
-    cout << "\nPurchase : ";
-    cin >> input_file;
-    itinerary purchase_itinerary(input_file);
-    purchase_itinerary.purchase_itinerary();
+    int input_2;
+    int flag=0;
+    itinerary * buy_itinerary = new itinerary;
+    do {
+        cout << "Please Input an Existing File Name to Make a Purchase.\n";
+        cout << "Available files: ";
+        listfiles("/Itineraries");
+        cout << "Purchase : ";
+        cin >> input_file;
+        buy_itinerary->set_file_name(input_file);
+        flag = buy_itinerary->file_existence_check();
+    } while (!flag);
+    buy_itinerary->calculate_price();
+    cout << "Press 1 to Make a Purchase\nPress 9 to Quit the Program";
+    do {
+        cin >> input_2;
+        if (input_2==9) {return 0;}
+        else if (input_2==1){
+        buy_itinerary->purchase_itinerary();
+        }
+    } while (input_2!=1);
 }
 else if (input==4) {
     cout << "Please Input Your Receipt Number Below.\n";
