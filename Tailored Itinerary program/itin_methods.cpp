@@ -70,14 +70,25 @@ void itinerary::create_itinerary(){
     }while (!flag);
 
     flag = 0;
-
-    cout << "So You Would Like to Visit as Early as:\n";
-    cout << "---------------------------------------\n";
-    cout << month_s << "/" << day_s << "/" << year_s << "\n";
-    cout << "Is That correct?\n";
-    cout << "--Press 1 If that is Correct.\n--Press 2 to Change this Date.\n";
-    cin >> change_date_flag;
-    if (change_date_flag==2) {change_date_flag=0;}
+        do {
+        cout << "So You Would Like to Visit as Early as:\n";
+        cout << "---------------------------------------\n";
+        cout << month_s << "/" << day_s << "/" << year_s << "\n";
+        cout << "Is That correct?\n";
+        cout << "--Press 1 If that is Correct.\n--Press 2 to Change this Date.\n";
+        cin >> change_date_flag;
+        if (change_date_flag==2) {
+            change_date_flag=0;
+            break;
+        }
+        if (change_date_flag == 1){
+            break;
+        }
+        else {
+            change_date_flag = 0;
+            cout << "Invalid Input\n";
+        }
+        }while  (1);
     } while (!change_date_flag);
 
 change_date_flag = 0;
@@ -183,6 +194,26 @@ change_date_flag = 0;
         }while(!flag);
 
         flag = 0;
+
+        do {
+        cout << "So You Would Like Your Trip To End As Late As: \n";
+        cout << "----------------------------------------------\n";
+        cout << month_e << "/" << day_e << "/" << year_e << "\n";
+        cout << "Is That Correct?\n";
+        cout << "--Press 1 If that is Correct.\n--Press 2 to Change this Date.\n";
+        cin >> change_date_flag;
+        if (change_date_flag==2){
+            change_date_flag=0;
+            break;
+            }
+        else if (change_date_flag==1){
+            break;
+        }
+        else {
+            change_date_flag = 0;
+            cout << "Invalid Input.";
+        }
+        }while (1);
 
     }while(!change_date_flag);
     
