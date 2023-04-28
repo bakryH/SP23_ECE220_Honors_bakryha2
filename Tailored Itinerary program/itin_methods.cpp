@@ -25,73 +25,75 @@ void itinerary::create_itinerary(){
     cout << "Start Trip as Early as: \n";
     cout << "-----------------------\n";
 
-    do {
-        cout << "Year: ";
-        cin >> year_s;
-        if (year_s < 2023){
-            cout << "Please Enter A Valid Year.\n";
-            continue;
-        }
-        if (year_s>2024){
-            cout << "Sorry, We Cannot Create Itineraries for More Than 2 Years in the Future.\n";
-            continue;
-        }
-        else {flag=1;}
-    }while(!flag);
-
-    flag = 0;
-
-    do {
-        cout << "Month: ";
-        cin >> month_s;
-        if (month_s > 0 && month_s < 13) {flag = 1;}
-        else {cout << "Invalid Month. Please Try Again\n";}
-    }while(!flag);
-
-    flag = 0;
-
-    do {
-        cout << "Day: ";
-        cin >> day_s;
-        if (day_s<1||day_s>31){
-            cout << "Invalid Day. Please Try Again\n";
-            continue;
-        }
-        else if (month_s==2 && day_s>28){
-            // does not take into account possibility of a leap year.
-            cout << "Invalid Day. Please Try Again\n";
-            continue;
-        }
-        else if ((month_s == 4 || month_s == 6 || month_s == 9 || month_s == 11)&& (day_s>30)){
-            cout << "Invalid Day. Please Try Again\n";
-            continue;
-        }
-        else {flag=1;}
-    }while (!flag);
-
-    flag = 0;
         do {
-        cout << "So You Would Like to Visit as Early as:\n";
-        cout << "---------------------------------------\n";
-        cout << month_s << "/" << day_s << "/" << year_s << "\n";
-        cout << "Is That correct?\n";
-        cout << "--Press 1 If that is Correct.\n--Press 2 to Change this Date.\n";
-        cin >> change_date_flag;
-        if (change_date_flag==2) {
-            change_date_flag=0;
-            break;
-        }
-        if (change_date_flag == 1){
-            break;
-        }
-        else {
-            change_date_flag = 0;
-            cout << "Invalid Input\n";
-        }
+            cout << "Year: ";
+            cin >> year_s;
+            if (year_s < 2023){
+                cout << "Please Enter A Valid Year.\n";
+                continue;
+            }
+            if (year_s>2024){
+                cout << "Sorry, We Cannot Create Itineraries for More Than 2 Years in the Future.\n";
+                continue;
+            }
+            else {flag=1;}
+        }while(!flag);
+
+        flag = 0;
+
+        do {
+            cout << "Month: ";
+            cin >> month_s;
+            if (month_s > 0 && month_s < 13) {flag = 1;}
+            else {cout << "Invalid Month. Please Try Again\n";}
+        }while(!flag);
+
+        flag = 0;
+
+        do {
+            cout << "Day: ";
+            cin >> day_s;
+            if (day_s<1||day_s>31){
+                cout << "Invalid Day. Please Try Again\n";
+                continue;
+            }
+            else if (month_s==2 && day_s>28){
+                // does not take into account possibility of a leap year.
+                cout << "Invalid Day. Please Try Again\n";
+                continue;
+            }
+            else if ((month_s == 4 || month_s == 6 || month_s == 9 || month_s == 11)&& (day_s>30)){
+                cout << "Invalid Day. Please Try Again\n";
+                continue;
+            }
+            else {flag=1;}
+        }while (!flag);
+
+        flag = 0;
+
+        do {
+            cout << "So You Would Like to Visit as Early as:\n";
+            cout << "---------------------------------------\n";
+            cout << month_s << "/" << day_s << "/" << year_s << "\n";
+            cout << "Is That correct?\n";
+            cout << "--Press 1 If that is Correct.\n--Press 2 to Change this Date.\n";
+            cin >> change_date_flag;
+            if (change_date_flag==2) {
+                change_date_flag=0;
+                break;
+            }
+            if (change_date_flag == 1){
+               break;
+            }
+            else {
+                change_date_flag = 0;
+                cout << "Invalid Input\n";
+            }
         }while  (1);
+
     } while (!change_date_flag);
 
-change_date_flag = 0;
+    change_date_flag = 0;
 
     do {
         cout << "End Trip As Late As:\n";
@@ -115,6 +117,7 @@ change_date_flag = 0;
             else if (year_e==year_s){flag=1;}
             else if (year_e>year_s && month_s == 12) {flag = 1;}
             else {cout<< "Maximum Length of A Trip Should Not Exceed One Month.\n";}
+
         }while(!flag);
 
         flag = 0;
@@ -196,26 +199,26 @@ change_date_flag = 0;
         flag = 0;
 
         do {
-        cout << "So You Would Like Your Trip To End As Late As: \n";
-        cout << "----------------------------------------------\n";
-        cout << month_e << "/" << day_e << "/" << year_e << "\n";
-        cout << "Is That Correct?\n";
-        cout << "--Press 1 If that is Correct.\n--Press 2 to Change this Date.\n";
-        cin >> change_date_flag;
-        if (change_date_flag==2){
-            change_date_flag=0;
-            break;
+            cout << "So You Would Like Your Trip To End As Late As: \n";
+            cout << "----------------------------------------------\n";
+            cout << month_e << "/" << day_e << "/" << year_e << "\n";
+            cout << "Is That Correct?\n";
+            cout << "--Press 1 If that is Correct.\n--Press 2 to Change this Date.\n";
+            cin >> change_date_flag;
+            if (change_date_flag==2){
+                change_date_flag=0;
+                break;
+                }
+            else if (change_date_flag==1){
+                break;
             }
-        else if (change_date_flag==1){
-            break;
-        }
-        else {
-            change_date_flag = 0;
-            cout << "Invalid Input.";
-        }
+            else {
+                change_date_flag = 0;
+                cout << "Invalid Input.";
+            }
         }while (1);
 
-    }while(!change_date_flag);
+    } while(!change_date_flag);
     
 
 
