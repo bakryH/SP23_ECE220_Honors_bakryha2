@@ -7,8 +7,9 @@ using namespace std;
 
 class itinerary {
     public:
-    itinerary (); // creates new itinerary
-    itinerary (string file); // creates new itinerary with initialized filename. May be useless now.
+    itinerary (); // creates new uninitialized itinerary
+    itinerary (string file); // creates new itinerary with initialized filename. May be useless now. Consider removing.
+    void create_itinerary();
     void view_itinerary(); // function that prints out an itinerary given it has a file_name
     void purchase_itinerary(); // function that emulates a purchase of an itinerary given a file_name
     void refund_itinerary(); // function emulates a refund process given a file_name
