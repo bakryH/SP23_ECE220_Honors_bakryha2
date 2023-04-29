@@ -9,17 +9,20 @@ using namespace std;
 
 itinerary::itinerary (){
     file_name = "To Be Set";
-}
-
-itinerary::itinerary (string file){
-    file_name = file;
+    sites_cairo = sites_aswan = "000000";
+    sites_luxor = "0000000";
+    month_e = month_s = day_e = day_s = year_e = year_s = trip_type = 0;
 }
 
 void itinerary::create_itinerary(){
-    int month_s, day_s, year_s;
-    int month_e, day_e, year_e;
+    // after all user input is gathered, generates itinerary txt file. 
+}
+
+void itinerary::set_date(){
+    // Consider splitting work of this function into smaller functions. 
     int flag=0;
     int change_date_flag=0;
+
     cout << "What is the Time Window in Which you Would Like to Visit?\n";
     do {
     cout << "Start Trip as Early as: \n";
@@ -37,7 +40,7 @@ void itinerary::create_itinerary(){
                 continue;
             }
             else {flag=1;}
-        }while(!flag);
+        } while(!flag);
 
         flag = 0;
 
@@ -46,7 +49,7 @@ void itinerary::create_itinerary(){
             cin >> month_s;
             if (month_s > 0 && month_s < 13) {flag = 1;}
             else {cout << "Invalid Month. Please Try Again\n";}
-        }while(!flag);
+        } while(!flag);
 
         flag = 0;
 
@@ -67,7 +70,7 @@ void itinerary::create_itinerary(){
                 continue;
             }
             else {flag=1;}
-        }while (!flag);
+        } while (!flag);
 
         flag = 0;
 
@@ -118,7 +121,7 @@ void itinerary::create_itinerary(){
             else if (year_e>year_s && month_s == 12) {flag = 1;}
             else {cout<< "Maximum Length of A Trip Should Not Exceed One Month.\n";}
 
-        }while(!flag);
+        } while(!flag);
 
         flag = 0;
 
@@ -137,8 +140,11 @@ void itinerary::create_itinerary(){
                         cout << "Maximum Length of A Trip Should Not Exceed One Month.\n";
                     }
                 }
-                else if (year_e>year_s){
+                else if (year_e>year_s && month_e == 1 && month_s == 12){
                     flag = 1;
+                }
+                else {
+                    cout << "Maximum Length of A Trip Should Not Exceed One Month.\n";
                 }
             }
             else {
@@ -172,7 +178,7 @@ void itinerary::create_itinerary(){
                 }
                 
             }
-            else if (month_e==month_s+1||month_e==1){
+            else if (month_e==month_s+1||(month_e==1&&month_s==12)){
                 if (month_s == 4 || month_s == 6 || month_s == 9 || month_s == 11){
                     if (30-day_s+day_e >= 3){
                         flag = 1;
@@ -194,7 +200,7 @@ void itinerary::create_itinerary(){
                 cout << "Invalid Day. Please Try Again.\n";
             }
             
-        }while(!flag);
+        } while(!flag);
 
         flag = 0;
 
@@ -216,17 +222,99 @@ void itinerary::create_itinerary(){
                 change_date_flag = 0;
                 cout << "Invalid Input.";
             }
-        }while (1);
+        } while (1);
 
     } while(!change_date_flag);
+}
+
+void itinerary::set_trip_type(){
     
+    int flag=0;
+
+    cout << "Great. You will visit sometime between:\n";
+    cout << "---------------------------------------\n";
+    cout << month_s << "/" << day_s << "/" << year_s << endl;
+    cout << "and\n";
+    cout << month_s << "/" << day_s << "/" << year_s << endl;
+    // consider doing while loop for all of the above.
+
+    do {
+        cout << "What Kind of Trip are you Thinking of having?\n";
+        cout << "---------------------------------------------" << endl;
+        cout << "Press 1 for : A Classical Luxury Historical Trip." << endl;
+        cout << "Press 2 for : A Relaxed Luxury Seaside Trip." << endl;
+        cout << "Press 3 for : A Luxury Historical and Seaside Trip" << endl;
+        cout << "Press 4 for : A Medical Trip" << endl;
+
+        cin >> trip_type;
+        if (trip_type<1 || trip_type>4){
+            cout << "Invalid Input." << endl;
+            break;
+        }
+    } while (!flag);
+
+}
+
+void itinerary::choose_sites(){
+
+    // ideas:
+    // enter letter after number to read a decription of the site/activity.
+    // choose site/activity by entering numbers consecutively in ascending order.
+    int flag=0;
+    cout << "Lets now go over some popular cities to visit and see ";
+    cout << "if you'd like to do some of the activities there!" << endl;
+
+    
+    cout << "Sites in Cairo:" << endl;
+    cout << "--------------------" << endl;
+    cout << "1. Giza Pyramids & Sphinx." << endl;
+    cout << "2. Egyptian museum." << endl;
+    cout << "3. Civilization Museum." << endl;
+    cout << "4. Saqqara Necropolis." << endl;
+    cout << "5. Islamic Cairo" << endl;
+    cout << "6. Old Cairo" << endl;
+
+    cout << "Enter the Number Next to the Sites you Would Like to Visit in Ascending Order With no Spaces: ";
+    do {
+        cin >> sites_cairo; 
+        if (this->valid_string(sites_cairo)){
+        flag = 1;
+        }
+        else {
+            cout << "Please Enter Valid Numbers in Ascending Order With no Spaces:";
+        }
+    } while (!flag);
+
+    cout << "Sites in Luxor:" << endl;
+    cout << "---------------" << endl;
+    cout << "1. Karnak Temple." << endl;
+    cout << "2. Dendara Temple." << endl; 
+    cout << "3. Valley of the Kings." << endl;
+    cout << "4. Hatshepsut Temple." << endl;
+    cout << "5. Colossi of Memnon." << endl;
+    cout << "6. Hot Air Balloon Ride." << endl;
+    cout << "7. Abu Simbel Day Trip." << endl;
+
+    cout << "Sites in Aswan:" << endl;
+    cout << "---------------" << endl;
+    cout << "1. Edfu Temple." << endl;
+    cout << "2. Kom Ombo Temple." << endl;
+    cout << "3. Philae Temple." << endl;
+    cout << "4. Crocodile Museum." << endl;
+    cout << "5. Unfinished Obelisk." << endl;
+    cout << "6. Felucca Boat Ride." << endl;
+
+    cout << "Sites & Activities in Hurghada:" << endl;
+    cout << "-------------------------------" << endl;
+    cout << "1. Snorkeling Day Trip." << endl;
+    cout << "2. Scuba Diving Day Trip." << endl;
+    cout << "3. Beach Day." << endl;
+    cout << "4. Safari Trip." << endl;
 
 
+}
 
-
-    cout << "What Kind of Trip are you Thinking of having?\n";
-
-
+int itinerary::valid_string(string sites){
 
 }
 
@@ -256,6 +344,7 @@ void itinerary::refund_itinerary(){
 
 
 }
+
  // base 1200 + count number of days of itinerary x 300 
 int itinerary::calculate_price(){
 

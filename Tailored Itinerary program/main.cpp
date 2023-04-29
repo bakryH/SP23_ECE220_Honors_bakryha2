@@ -29,8 +29,9 @@ cin >> input;
 if (input==1) {
     itinerary * new_itinerary = new itinerary;
     new_itinerary->create_itinerary();
+    cout << "Itinerary Created. Would You like to view it?"<< endl;
     }
-else if (input==2) { // implement in the way input 3 code is handled to take care of incorrect inputs
+else if (input==2) { 
     itinerary *template_itinerary = new itinerary;
     do { 
         cout << "Please Input an Exisitng File Name to View.\n";
@@ -76,7 +77,7 @@ else if (input==4) {
     // the type of itinerary bought. For now, the code will continue assuming
     // this step is implemented, allowing this to be step to be implemented later 
 
-    itinerary cancel_itinerary("itinerary_from_database");
+    itinerary cancel_itinerary;
     cancel_itinerary.refund_itinerary();
 }
 else if (input==9) {return 0;}
