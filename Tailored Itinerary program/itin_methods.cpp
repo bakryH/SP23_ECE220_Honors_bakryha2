@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -9,14 +10,39 @@ using namespace std;
 
 itinerary::itinerary (){
     file_name = "To Be Set";
-    sites_cairo = sites_aswan = "000000";
-    sites_luxor = "0000000";
-    month_e = month_s = day_e = day_s = year_e = year_s = trip_type = 0;
+    sites_cairo = "0000000";
+    sites_luxor = "00000000";
+    sites_aswan = "000000";
+    sites_hurghada = "0000";
+    month_e = month_s = day_e = day_s = year_e = year_s  = 0;
+    trip_type = "To Be Set";
 }
 
 void itinerary::create_itinerary(){
     // after all user input is gathered, generates itinerary txt file. 
+    string name_of_itinerary;
+    int flag = 0;
+
+    this->set_date();
+    this->set_trip_type();
+    this->choose_sites();
+    cout << "Please Choose a name for this itinerary file: "<<endl;
+
+    do {
+        cin >> name_of_itinerary;
+        if (this->file_existence_check(name_of_itinerary)){
+          cout << "This name already exists. Please choose a different one." << endl;
+        }
+        else {flag = 1;}
+    } while (!flag);
+    this->generate_itinerary(name_of_itinerary);
+
 }
+
+void itinerary::generate_itinerary(string file_nom){
+
+}
+
 
 void itinerary::set_date(){
     // Consider splitting work of this function into smaller functions. 
@@ -225,11 +251,6 @@ void itinerary::set_date(){
         } while (1);
 
     } while(!change_date_flag);
-}
-
-void itinerary::set_trip_type(){
-    
-    int flag=0;
 
     cout << "Great. You will visit sometime between:\n";
     cout << "---------------------------------------\n";
@@ -237,29 +258,35 @@ void itinerary::set_trip_type(){
     cout << "and\n";
     cout << month_s << "/" << day_s << "/" << year_s << endl;
     // consider doing while loop for all of the above.
+}
 
-    do {
+void itinerary::set_trip_type(){
+    
+    int flag=0;
+    int tybe;
+
+   
         cout << "What Kind of Trip are you Thinking of having?\n";
         cout << "---------------------------------------------" << endl;
         cout << "Press 1 for : A Classical Luxury Historical Trip." << endl;
         cout << "Press 2 for : A Relaxed Luxury Seaside Trip." << endl;
-        cout << "Press 3 for : A Luxury Historical and Seaside Trip" << endl;
-        cout << "Press 4 for : A Medical Trip" << endl;
-
-        cin >> trip_type;
-        if (trip_type<1 || trip_type>4){
+        cout << "Press 3 for : A Luxury Historical and Seaside Trip." << endl;
+    do {
+        cin >> tybe;
+        if (tybe<1 || tybe>3){
             cout << "Invalid Input." << endl;
-            break;
         }
+        else {flag = 1;}
     } while (!flag);
+
+    if (tybe == 1){trip_type = "A Classical Luxury Historical Trip.";}
+    else if (tybe == 2){trip_type = "A Relaxed Luxury Seaside Trip.";}
+    else if (tybe==3){trip_type = "A Luxury Historical and Seaside Trip.";}
 
 }
 
 void itinerary::choose_sites(){
 
-    // ideas:
-    // enter letter after number to read a decription of the site/activity.
-    // choose site/activity by entering numbers consecutively in ascending order.
     int flag=0;
     cout << "Lets now go over some popular cities to visit and see ";
     cout << "if you'd like to do some of the activities there!" << endl;
@@ -273,27 +300,46 @@ void itinerary::choose_sites(){
     cout << "4. Saqqara Necropolis." << endl;
     cout << "5. Islamic Cairo" << endl;
     cout << "6. Old Cairo" << endl;
+    cout << "7. Alexandria Day Trip" << endl;
 
-    cout << "Enter the Number Next to the Sites you Would Like to Visit in Ascending Order With no Spaces: ";
+    cout << "Enter the Number Next to the Sites you Would Like to Visit With no Spaces: ";
     do {
         cin >> sites_cairo; 
-        if (this->valid_string(sites_cairo)){
-        flag = 1;
+        sort(sites_cairo.begin(),sites_cairo.end());
+        if (this->valid_string(sites_cairo, 7, sites_cairo.length())){
+            flag = 1;
         }
         else {
-            cout << "Please Enter Valid Numbers in Ascending Order With no Spaces:";
+            cout << "Please Enter Valid Numbers With no Spaces:";
         }
     } while (!flag);
+
+    flag = 0;
 
     cout << "Sites in Luxor:" << endl;
     cout << "---------------" << endl;
     cout << "1. Karnak Temple." << endl;
     cout << "2. Dendara Temple." << endl; 
-    cout << "3. Valley of the Kings." << endl;
-    cout << "4. Hatshepsut Temple." << endl;
-    cout << "5. Colossi of Memnon." << endl;
-    cout << "6. Hot Air Balloon Ride." << endl;
-    cout << "7. Abu Simbel Day Trip." << endl;
+    cout << "3. Luxor Temple." << endl;
+    cout << "4. Valley of the Kings." << endl;
+    cout << "5. Hatshepsut Temple." << endl;
+    cout << "6. Colossi of Memnon." << endl;
+    cout << "7. Hot Air Balloon Ride." << endl;
+    cout << "8. Abu Simbel Day Trip." << endl;
+
+    cout << "Enter the Number Next to the Sites you Would Like to Visit With no Spaces: ";
+    do {
+        cin >> sites_luxor; 
+        sort(sites_luxor.begin(),sites_luxor.end());
+        if (this->valid_string(sites_luxor, 8, sites_luxor.length())){
+            flag = 1;
+        }
+        else {
+            cout << "Please Enter Valid Numbers With no Spaces: ";
+        }
+    } while (!flag);
+
+    flag = 0;
 
     cout << "Sites in Aswan:" << endl;
     cout << "---------------" << endl;
@@ -304,6 +350,20 @@ void itinerary::choose_sites(){
     cout << "5. Unfinished Obelisk." << endl;
     cout << "6. Felucca Boat Ride." << endl;
 
+    cout << "Enter the Number Next to the Sites you Would Like to Visit With no Spaces: ";
+    do {
+        cin >> sites_aswan; 
+        sort(sites_aswan.begin(),sites_aswan.end());
+        if (this->valid_string(sites_aswan, 6, sites_aswan.length())){
+            flag = 1;
+        }
+        else {
+            cout << "Please Enter Valid Numbers With no Spaces: ";
+        }
+    } while (!flag);
+
+    flag = 0;
+
     cout << "Sites & Activities in Hurghada:" << endl;
     cout << "-------------------------------" << endl;
     cout << "1. Snorkeling Day Trip." << endl;
@@ -311,10 +371,32 @@ void itinerary::choose_sites(){
     cout << "3. Beach Day." << endl;
     cout << "4. Safari Trip." << endl;
 
+    cout << "Enter the Number Next to the Sites you Would Like to Visit With no Spaces: ";
+    do {
+        cin >> sites_hurghada; 
+        sort(sites_hurghada.begin(),sites_hurghada.end());
+        if (this->valid_string(sites_hurghada, 4, sites_hurghada.length())){
+            flag = 1;
+        }
+        else {
+            cout << "Please Enter Valid Numbers With no Spaces: ";
+        }
+    } while (!flag);
 
+    // sites to visit acquired.
 }
 
-int itinerary::valid_string(string sites){
+//returns 1 if valid, 0 otherwise
+int itinerary::valid_string(string sites, int max_length, int length){
+    if (length <= max_length){
+    for(string::iterator it = sites.begin(); it!=sites.end();it++){
+        if (*it<48 || *it> (length+48)){
+            return 0;
+        }
+    }
+    return 1;
+    }
+    else {return 0;}
 
 }
 
@@ -336,12 +418,51 @@ void itinerary::view_itinerary(){
 
 void itinerary::purchase_itinerary(){
 
+    int input;
+    int flag = 0;
+    int credit_num, sec_code, exp_date;
+    string email;
 
+    do {
+    cout << "Choose method of payment: \n";
+    cout << "1. Credit Card." << endl;
+    cout << "2. Paypal." << endl;
+    cout << "3. E-check." << endl;
+    cout << "To quit, press 9" << endl;
+
+    cin >> input;
+
+    if (input == 1){
+        flag = 1;
+        cout << "Please Enter your credit card number: " << endl;
+        cin >> credit_num;
+        cout << "Please Enter the security code: " << endl;
+        cin >> sec_code;
+        cout << "Please Enter the Expiration date: " << endl;
+        cin >> exp_date;
+        cout << "Please Enter your Email Address: " << endl;
+        cin >> email;
+        cout << "Thank you for your payment. You will recieve a confirmation email shortly." << endl;
+    }
+    if (input == 2){
+        cout << "Redirecting you to PayPal..." << endl;
+        sleep(6);
+        cout << "Thank you for your payment." << endl;
+    }
+    if (input == 3){
+        cout << "Redirecting you to a secure website..." << endl;
+        sleep(6);
+        cout << "Thank you for your payment." << endl;
+    }
+    if (input == 9){return;}
+    else {cout << "Invalid Input." << endl;}
+    } while (!flag);
 
 }
 
 void itinerary::refund_itinerary(){
-
+    cout << "Are you sure you want to request a refund?"<<endl;
+    cout << "Sorry to hear that " << endl;
 
 }
 
@@ -359,32 +480,31 @@ int itinerary::calculate_price(){
     file.open("/Itineraries/"+file_name);
     while (1){
     file >> word;
-    if (word == "Departure"){ 
-        break;}
+    if (word == "Departure"){break;}
     else {word_counter ++;}
     }
     file.close();
 
     file.open("/Itineraries/"+file_name);
-    for (i=0;i<word_counter;i++){
-        file >> word;
-    }
-    
+    for (i=0;i<word_counter;i++){file >> word;}
     first_digit = word[0];
     if (word[1]<58 && word[1]>47){
         second_digit=word[1];
         }
     
-    price = price + 250 *(first_digit+second_digit) ;
+    price = price + 250 *(first_digit+second_digit);
+
+    price_of_itinerary = price;
 
     cout << "The Total Cost For This Trip With All Inclusions Listed in";
-    cout << "the Itinerary Will be: $"<< price <<endl;
+    cout << "the Itinerary Will be: $" << price << "." << endl;
 
 }
 
-int itinerary::file_existence_check(){
+// returns 1 if file exists
+int itinerary::file_existence_check(string file_of_itinerary){
     ifstream file;
-    file.open("/Itinerary/"+file_name);
+    file.open("/Itinerary/"+file_of_itinerary);
     if (file.is_open()){
         file.close();
         return 1;
