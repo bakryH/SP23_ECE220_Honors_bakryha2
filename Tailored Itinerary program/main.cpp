@@ -27,13 +27,15 @@ do
 {
 cin >> input;
 if (input==1) {
+    // do I need dynamic mem allocation?
     itinerary * new_itinerary = new itinerary;
     new_itinerary->create_itinerary();
-    cout << "Itinerary Created. Would You like to view it?"<< endl;
-    }
+    cout << "Itinerary Created successfully."<< endl;
+    // consider using do while loop for all of main so that user can go back to menu after here.
+}
 else if (input==2) { 
     itinerary *template_itinerary = new itinerary;
-     
+    
     cout << "Please Input an Exisitng File Name to View.\n";
     cout << "Available files: ";
     listfiles("/Itineraries");
@@ -45,7 +47,7 @@ else if (input==2) {
         if (!flag){cout << "Please Input an Exisiting File Name." << endl;}
     } while(!flag);
     template_itinerary->view_itinerary();
-    }
+}
 else if (input==3) {
     int input_2=0;
     itinerary * buy_itinerary = new itinerary;

@@ -15,7 +15,7 @@ itinerary::itinerary (){
     sites_aswan = "000000";
     sites_hurghada = "0000";
     month_e = month_s = day_e = day_s = year_e = year_s  = 0;
-    trip_type = "To Be Set";
+    trip_type = 0;
 }
 
 void itinerary::create_itinerary(){
@@ -26,21 +26,154 @@ void itinerary::create_itinerary(){
     this->set_date();
     this->set_trip_type();
     this->choose_sites();
-    cout << "Please Choose a name for this itinerary file: "<<endl;
+    //this->choose_add_ons(); -// implement function to decide if hotels, certain meals, nile cruise included.
 
+    cout << "Please Choose a name for this itinerary file: "<<endl;
     do {
         cin >> name_of_itinerary;
         if (this->file_existence_check(name_of_itinerary)){
-          cout << "This name already exists. Please choose a different one." << endl;
+          cout << "A file with this name already exists. Please choose a different one." << endl;
         }
-        else {flag = 1;}
+        else {
+            file_name = name_of_itinerary;
+            flag = 1;
+        }
     } while (!flag);
     this->generate_itinerary(name_of_itinerary);
-
+    cout << "Itinerary Generated. Would You Like to View it?" << endl;
+    
+    do {
+        cout << "Press 1 to view it. Press 9 to exit." << endl;
+        cin >> flag;
+        if (flag==1){
+            this->view_itinerary();
+        }
+        if (flag==9){
+            return;
+        }
+        else {
+            cout << "Invalid_Input" << endl;
+            flag = 0;
+        }
+    }while(!flag);
 }
 
 void itinerary::generate_itinerary(string file_nom){
+    int days;
+    // int c_nights = 1, l_nights=0, a_nights=0, h_nights=0;
+    string line;
+    ofstream output_file("Itineraries/"+file_nom);
+    if (output_file.is_open()){
+        // calculate number of days
+        days=this->calculate_days();
+        // print Itinerary Title
+        if (trip_type==1){
+            ifstream input_file("Itineraries/Data/title1.txt");
+            getline(input_file,line);
+            input_file.close();
+        }
+        else if (trip_type==2){
+            ifstream input_file("Itineraries/Data/title2.txt");
+            getline(input_file,line);
+            input_file.close();
+        }
+        else if (trip_type==3){
+            ifstream input_file("Itineraries/Data/title3.txt");
+            getline(input_file,line);
+            input_file.close();
+        }
+        output_file << line << endl << endl;
+        // insert arrival text
+        ifstream input_file("Itineraries/Data/arrival.txt");
+        if (input_file.is_open()&&output_file.is_open()){
+            while (getline(input_file, line)){
+                output_file << line << endl;
+            }
+            input_file.close();
+        }
+        output_file << endl;
+        // Iterate over number of days starting from Day 2:  
+        // start with cairo e.g 00124
+        
+        // 2 activities per day
+        // then hurghada, do the same
+        // then luxor
+        // then aswan
 
+        // insert departure text
+        output_file << "Day " << days << ":" << endl;
+        ifstream input_file("Itineraries/Data/departure.txt");
+        if (input_file.is_open()&&output_file.is_open()){
+            while (getline(input_file, line)){
+                output_file << line << endl;
+            }
+            input_file.close();
+        }
+        output_file << endl;
+
+        // print inclusions.
+        ifstream input_file("Itineraries/Data/inclusions.txt");
+        if (input_file.is_open()&&output_file.is_open()){
+            while (getline(input_file, line)){
+                output_file << line << endl;
+            }
+            input_file.close();
+        }
+        //print hotel inclusions if applicable
+        /* 
+        if (hotel_flag){
+            ifstream input_file("Itineraries/Data/accomodation.txt");
+            if (input_file.is_open()&&output_file.is_open()){
+                getline(input_file, line)
+                output_file << "- " << tot_nights << " ";
+                output_file << line << endl;
+                getline(input_file, line))
+                output_file << "- 1 " << line << endl;
+                input_file.close();
+            }
+        if (cruise_flag){
+            ifstream input_file("Itineraries/Data/cruise.txt");
+            if (input_file.is_open()&&output_file.is_open()){
+                getline(input_file, line)
+                output_file << "- " << l_nights+a_nights << " ";
+                output_file << line << endl;
+                input_file.close();
+            }
+        }
+        */
+        output_file << endl;
+
+        ifstream input_file("Itineraries/Data/exclusions.txt");
+        if (input_file.is_open()&&output_file.is_open()){
+            while (getline(input_file, line)){
+                output_file << line << endl;
+            }
+            input_file.close();
+        }
+
+        output_file.close();
+    }
+    else {cout << "File existence check function may have not worked." << endl;}
+}
+
+int itinerary::calculate_days(){
+    int num_of_days=0;
+    string::iterator it;
+    for (it=sites_cairo.begin();it!=sites_cairo.end();it++){
+        if (*it){num_of_days++;}
+    }
+    for (it=sites_luxor.begin();it!=sites_luxor.end();it++){
+        if (*it){num_of_days++;}
+    }
+    for (it=sites_aswan.begin();it!=sites_aswan.end();it++){
+        if (*it){num_of_days++;}
+    }
+    for (it=sites_hurghada.begin();it!=sites_hurghada.end();it++){
+        if (*it){num_of_days++;}
+    }
+    // what if odd number of days?
+    // also find way to print that number of activities will not fit time window you indicated. 
+    return num_of_days/2;
 }
 
 
@@ -278,11 +411,7 @@ void itinerary::set_trip_type(){
         }
         else {flag = 1;}
     } while (!flag);
-
-    if (tybe == 1){trip_type = "A Classical Luxury Historical Trip.";}
-    else if (tybe == 2){trip_type = "A Relaxed Luxury Seaside Trip.";}
-    else if (tybe==3){trip_type = "A Luxury Historical and Seaside Trip.";}
-
+    trip_type = tybe;
 }
 
 void itinerary::choose_sites(){

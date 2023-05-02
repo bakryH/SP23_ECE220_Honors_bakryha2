@@ -15,6 +15,7 @@ class itinerary {
     void set_trip_type(); // chooses trip type. Will be used as my itinerary title.
     void choose_sites(); // takes user input and generates the string that tells what sites the user will visit
     void generate_itinerary(string file);
+    int calculate_days();
 
     void view_itinerary(); // function that prints out an itinerary given it has a file_name
     void purchase_itinerary(); // function that emulates a purchase of an itinerary given a file_name
@@ -32,7 +33,9 @@ class itinerary {
     int price_of_itinerary;
     int month_s, day_s, year_s; // starting date of trip
     int month_e, day_e, year_e; // ending date of trip
-    string trip_type;  // Itinerary Title
+    int trip_type;  // Itinerary Title
+    //int cruise_flag;
+    //int hotel_flag;
 };
 
 void listfiles(string folder);
