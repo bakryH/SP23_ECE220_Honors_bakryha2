@@ -9,14 +9,12 @@ class itinerary {
     public:
     //functions
     itinerary (); // creates new uninitialized itinerary
-
     void create_itinerary(); // calls different functions to create itinerary;
     void set_date(); // sets date of itinerary
     void set_trip_type(); // chooses trip type. Will be used as my itinerary title.
     void choose_sites(); // takes user input and generates the string that tells what sites the user will visit
-    void generate_itinerary(string file);
-    int calculate_days();
-
+    void generate_itinerary(string file); // takes user inputs to generate itinerary
+    int calculate_days(); // calculates number of days of trip based on number of activities
     void view_itinerary(); // function that prints out an itinerary given it has a file_name
     void purchase_itinerary(); // function that emulates a purchase of an itinerary given a file_name
     void refund_itinerary(); // function emulates a refund process given a file_name

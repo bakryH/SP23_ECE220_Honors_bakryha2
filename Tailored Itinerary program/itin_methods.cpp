@@ -59,13 +59,18 @@ void itinerary::create_itinerary(){
 }
 
 void itinerary::generate_itinerary(string file_nom){
-    int days;
+    // Must fix to disallow alexandria and abu simbel being in days with each other. 
+    // also, dont think cairo or hurghada days can bleed into luxor or aswan days.
+    int tot_days, cur_day=2;
+    string act_1, act_2;
     // int c_nights = 1, l_nights=0, a_nights=0, h_nights=0;
     string line;
+    string::iterator it;
+    int counter=0;
     ofstream output_file("Itineraries/"+file_nom);
     if (output_file.is_open()){
         // calculate number of days
-        days=this->calculate_days();
+        tot_days=this->calculate_days();
         // print Itinerary Title
         if (trip_type==1){
             ifstream input_file("Itineraries/Data/title1.txt");
@@ -84,6 +89,7 @@ void itinerary::generate_itinerary(string file_nom){
         }
         output_file << line << endl << endl;
         // insert arrival text
+        output_file << "Day 1: Arrival" << endl;
         ifstream input_file("Itineraries/Data/arrival.txt");
         if (input_file.is_open()&&output_file.is_open()){
             while (getline(input_file, line)){
@@ -92,16 +98,165 @@ void itinerary::generate_itinerary(string file_nom){
             input_file.close();
         }
         output_file << endl;
-        // Iterate over number of days starting from Day 2:  
-        // start with cairo e.g 00124
-        
-        // 2 activities per day
-        // then hurghada, do the same
-        // then luxor
-        // then aswan
+
+        output_file << "Day " << cur_day << ": " ;
+
+        for (it = sites_cairo.begin(); it!= sites_cairo.end(); it++){
+            if (*it && counter < 2){
+                ifstream input_file("Itineraries/Data/c" +string(1,*it)+ ".txt");
+                getline(input_file, line);
+                if (counter == 0){
+                    act_1 = "c" + string(1,*it);
+                    output_file << line;
+                }
+                else if (counter == 1){
+                    act_2 = "c" + string(1,*it);
+                    output_file<< " and " << line << endl;
+                }
+                counter ++;
+                input_file.close();
+            }
+            if (counter==2){
+                ifstream input_file_1("Itineraries/Data/" +act_1+ ".txt");
+                ifstream input_file_2("Itineraries/Data/" +act_2+ ".txt");
+                getline(input_file_1,line);
+                getline(input_file_2,line);
+                while (getline(input_file_1,line)){
+                    output_file << line << endl;
+                    input_file_1.close();
+                }
+                while (getline(input_file_2,line)){
+                    output_file << line << endl;
+                    input_file_2.close();
+                }
+                output_file << endl;
+                cur_day++;
+                counter = 0;
+                output_file << "Day " << cur_day << ": " ;
+            }
+        }
+
+        for (it = sites_luxor.begin(); it != sites_luxor.end();it++){
+            if (*it && counter < 2){
+                ifstream input_file("Itineraries/Data/l" +string(1,*it)+ ".txt");
+                getline(input_file, line);
+                if (counter == 0){
+                    act_1 = "l" + string(1,*it);
+                    output_file << line ;
+                }
+                else if (counter == 1){
+                    act_2 = "l" + string (1,*it);
+                    output_file << " and " << line << endl;
+                }
+                counter++;
+                input_file.close();
+            }
+            if (counter==2){
+                ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
+                ifstream input_file_2("Itineraries/Data/" + act_2 + ".txt");
+                getline(input_file_1,line);
+                getline(input_file_2,line);
+                while (getline(input_file_1,line)){
+                    output_file << line << endl;
+                    input_file_1.close();
+                }
+                while (getline(input_file_2,line)){
+                    output_file << line << endl;
+                    input_file_2.close();
+                }
+                output_file << endl;
+                cur_day++;
+                counter = 0;
+                output_file << "Day " << cur_day << ": " ;
+            }
+        }
+
+        for (it = sites_aswan.begin(); it!= sites_aswan.end();it++){
+            if (*it && counter < 2){
+                ifstream input_file("Itineraries/Data/a" +string(1,*it)+ ".txt");
+                getline(input_file, line);
+                if (counter == 0){
+                    act_1 = "a" + string(1,*it);
+                    output_file << line;
+                }
+                else if (counter == 1){
+                    act_2 = "a" + string (1,*it);
+                    output_file << " and " << line << endl;
+                }
+                counter++;
+                input_file.close();
+            }
+            if (counter==2){
+                ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
+                ifstream input_file_2("Itineraries/Data/" + act_2 + ".txt");
+                getline(input_file_1,line);
+                getline(input_file_2,line);
+                while (getline(input_file_1,line)){
+                    output_file << line << endl;
+                    input_file_1.close();
+                }
+                while (getline(input_file_2,line)){
+                    output_file << line << endl;
+                    input_file_2.close();
+                }
+                output_file << endl;
+                cur_day++;
+                counter = 0;
+                output_file << "Day " << cur_day << ": " ;
+            }
+
+        }
+
+        for (it = sites_hurghada.begin(); it!= sites_hurghada.end();it++){
+            if (*it && counter < 2){
+                ifstream input_file("Itineraries/Data/h" +string(1,*it)+ ".txt");
+                getline(input_file, line);
+                if (counter == 0){
+                    act_1 = "h" + string(1,*it);
+                    output_file << line;
+                }
+                else if (counter == 1){
+                    act_2 = "h" + string (1,*it);
+                    output_file << " and " << line << endl;
+                }
+                counter++;
+                input_file.close();
+            }
+            if (counter==2){
+                ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
+                ifstream input_file_2("Itineraries/Data/" + act_2 + ".txt");
+                getline(input_file_1,line);
+                getline(input_file_2,line);
+                while (getline(input_file_1,line)){
+                    output_file << line << endl;
+                    input_file_1.close();
+                }
+                while (getline(input_file_2,line)){
+                    output_file << line << endl;
+                    input_file_2.close();
+                }
+                output_file << endl;
+                cur_day++;
+                counter = 0;
+                output_file << "Day " << cur_day << ": " ;
+            }
+
+        }
+        if (counter == 1){
+            //just insert day and increment cur_day
+            output_file << endl;
+            ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
+            getline(input_file_1,line);
+            while (getline(input_file_1,line)){
+                    output_file << line << endl;
+                    input_file_1.close();
+            }
+            output_file << endl;
+            cur_day ++;
+        }
 
         // insert departure text
-        output_file << "Day " << days << ":" << endl;
+        output_file << "Day " << tot_days << ": Departure" << endl;
         ifstream input_file("Itineraries/Data/departure.txt");
         if (input_file.is_open()&&output_file.is_open()){
             while (getline(input_file, line)){
@@ -171,9 +326,11 @@ int itinerary::calculate_days(){
     for (it=sites_hurghada.begin();it!=sites_hurghada.end();it++){
         if (*it){num_of_days++;}
     }
-    // what if odd number of days?
-    // also find way to print that number of activities will not fit time window you indicated. 
-    return num_of_days/2;
+    // what if odd number of days? then one day there will be one activity. consider adding it to departure 
+    // instead.
+    // also find way to print messagge that number of activities will not fit time window you indicated. 
+    if (num_of_days%2 == 0){return num_of_days/2 +2;}
+    else {return num_of_days/2;+3;}
 }
 
 
@@ -590,9 +747,21 @@ void itinerary::purchase_itinerary(){
 }
 
 void itinerary::refund_itinerary(){
+    int input;
     cout << "Are you sure you want to request a refund?"<<endl;
-    cout << "Sorry to hear that " << endl;
-
+    cout << "Press 1 if yes.\nPress 9 to cancel and quit";
+    cin >> input;
+    do {
+    if (input == 1){
+        cout << "Sorry to hear that. Your refund will be proccessed within 5-7 business days." << endl;
+        return;
+    }
+    else if (input==9){return;}
+    else {
+        input = 0;
+        cout << "Invalid Input. Please Try Again." << endl;
+    }
+    } while (!input);
 }
 
  // base 1200 + count number of days of itinerary x 300 
