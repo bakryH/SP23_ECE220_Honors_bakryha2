@@ -1,5 +1,5 @@
-#include<iostream>
-#include "itin_methods.h"
+#include <iostream>
+#include "itin_methods.hpp"
 #include <string>
 #include <filesystem>
 
@@ -37,12 +37,12 @@ else if (input==2) {
     itinerary *template_itinerary = new itinerary;
     
     cout << "Please Input an Exisitng File Name to View.\n";
-    cout << "Available files: ";
-    listfiles("/Itineraries");
+    cout << "Available files: " << endl;
+    listfiles("Itineraries");
     do {
         cout << "\nView : ";
         cin >> input_file;
-        template_itinerary->set_file_name("input_file");
+        template_itinerary->set_file_name(input_file);
         flag = template_itinerary->file_existence_check(template_itinerary->file_name);
         if (!flag){cout << "Please Input an Exisiting File Name." << endl;}
     } while(!flag);
@@ -53,8 +53,8 @@ else if (input==3) {
     itinerary * buy_itinerary = new itinerary;
     
     cout << "Please Input an Existing File Name to Make a Purchase.\n";
-    cout << "Available files: ";
-    listfiles("/Itineraries");
+    cout << "Available files: " << endl;
+    listfiles("Itineraries");
     do {
         cout << "Purchase : ";
         cin >> input_file;
@@ -63,7 +63,7 @@ else if (input==3) {
         if (!flag){cout << "Please Input an Exisiting File Name." << endl;}
     } while (!flag);
     buy_itinerary->calculate_price();
-    cout << "Press 1 to Make a Purchase\nPress 9 to Quit the Program";
+    cout << "Press 1 to Make a Purchase\nPress 9 to Quit the Program\n";
     do {
         cin >> input_2;
         if (input_2==9) {return 0;}

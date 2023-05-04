@@ -1,8 +1,9 @@
-#include "itin_methods.h"
+#include "itin_methods.hpp"
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
+#include <filesystem>
 
 using namespace std;
 
@@ -68,29 +69,30 @@ void itinerary::generate_itinerary(string file_nom){
     string::iterator it;
     int counter=0;
     ofstream output_file("Itineraries/"+file_nom);
+    ifstream input_file, input_file_1, input_file_2;
     if (output_file.is_open()){
         // calculate number of days
         tot_days=this->calculate_days();
         // print Itinerary Title
         if (trip_type==1){
-            ifstream input_file("Itineraries/Data/title1.txt");
+            input_file.open("Itineraries/Data/title1.txt");
             getline(input_file,line);
             input_file.close();
         }
         else if (trip_type==2){
-            ifstream input_file("Itineraries/Data/title2.txt");
+            input_file.open("Itineraries/Data/title2.txt");
             getline(input_file,line);
             input_file.close();
         }
         else if (trip_type==3){
-            ifstream input_file("Itineraries/Data/title3.txt");
+            input_file.open("Itineraries/Data/title3.txt");
             getline(input_file,line);
             input_file.close();
         }
         output_file << line << endl << endl;
         // insert arrival text
         output_file << "Day 1: Arrival" << endl;
-        ifstream input_file("Itineraries/Data/arrival.txt");
+        input_file.open("Itineraries/Data/arrival.txt");
         if (input_file.is_open()&&output_file.is_open()){
             while (getline(input_file, line)){
                 output_file << line << endl;
@@ -99,14 +101,13 @@ void itinerary::generate_itinerary(string file_nom){
         }
         output_file << endl;
 
-        output_file << "Day " << cur_day << ": " ;
-
         for (it = sites_cairo.begin(); it!= sites_cairo.end(); it++){
             if (*it && counter < 2){
-                ifstream input_file("Itineraries/Data/c" +string(1,*it)+ ".txt");
+                input_file.open("Itineraries/Data/c" +string(1,*it)+ ".txt");
                 getline(input_file, line);
                 if (counter == 0){
                     act_1 = "c" + string(1,*it);
+                    output_file << "Day " << cur_day << ": " ;
                     output_file << line;
                 }
                 else if (counter == 1){
@@ -117,31 +118,32 @@ void itinerary::generate_itinerary(string file_nom){
                 input_file.close();
             }
             if (counter==2){
-                ifstream input_file_1("Itineraries/Data/" +act_1+ ".txt");
-                ifstream input_file_2("Itineraries/Data/" +act_2+ ".txt");
+                input_file_1.open("Itineraries/Data/" +act_1+ ".txt");
+                input_file_2.open("Itineraries/Data/" +act_2+ ".txt");
                 getline(input_file_1,line);
                 getline(input_file_2,line);
                 while (getline(input_file_1,line)){
                     output_file << line << endl;
-                    input_file_1.close();
                 }
+                input_file_1.close();
+                output_file << endl;
                 while (getline(input_file_2,line)){
                     output_file << line << endl;
-                    input_file_2.close();
                 }
+                input_file_2.close();
                 output_file << endl;
                 cur_day++;
                 counter = 0;
-                output_file << "Day " << cur_day << ": " ;
             }
         }
 
         for (it = sites_luxor.begin(); it != sites_luxor.end();it++){
             if (*it && counter < 2){
-                ifstream input_file("Itineraries/Data/l" +string(1,*it)+ ".txt");
+                input_file.open("Itineraries/Data/l" +string(1,*it)+ ".txt");
                 getline(input_file, line);
                 if (counter == 0){
                     act_1 = "l" + string(1,*it);
+                    output_file << "Day " << cur_day << ": " ;
                     output_file << line ;
                 }
                 else if (counter == 1){
@@ -152,32 +154,33 @@ void itinerary::generate_itinerary(string file_nom){
                 input_file.close();
             }
             if (counter==2){
-                ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
-                ifstream input_file_2("Itineraries/Data/" + act_2 + ".txt");
+                input_file_1.open("Itineraries/Data/" + act_1 + ".txt");
+                input_file_2.open("Itineraries/Data/" + act_2 + ".txt");
                 getline(input_file_1,line);
                 getline(input_file_2,line);
                 while (getline(input_file_1,line)){
                     output_file << line << endl;
-                    input_file_1.close();
                 }
+                input_file_1.close();
+                output_file << endl;
                 while (getline(input_file_2,line)){
                     output_file << line << endl;
-                    input_file_2.close();
                 }
+                input_file_2.close();
                 output_file << endl;
                 cur_day++;
                 counter = 0;
-                output_file << "Day " << cur_day << ": " ;
             }
         }
 
         for (it = sites_aswan.begin(); it!= sites_aswan.end();it++){
             if (*it && counter < 2){
-                ifstream input_file("Itineraries/Data/a" +string(1,*it)+ ".txt");
+                input_file.open("Itineraries/Data/a" +string(1,*it)+ ".txt");
                 getline(input_file, line);
                 if (counter == 0){
                     act_1 = "a" + string(1,*it);
                     output_file << line;
+                    output_file << "Day " << cur_day << ": " ;
                 }
                 else if (counter == 1){
                     act_2 = "a" + string (1,*it);
@@ -187,33 +190,34 @@ void itinerary::generate_itinerary(string file_nom){
                 input_file.close();
             }
             if (counter==2){
-                ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
-                ifstream input_file_2("Itineraries/Data/" + act_2 + ".txt");
+                input_file_1.open("Itineraries/Data/" + act_1 + ".txt");
+                input_file_2.open("Itineraries/Data/" + act_2 + ".txt");
                 getline(input_file_1,line);
                 getline(input_file_2,line);
                 while (getline(input_file_1,line)){
                     output_file << line << endl;
-                    input_file_1.close();
                 }
+                input_file_1.close();
+                output_file << endl;
                 while (getline(input_file_2,line)){
                     output_file << line << endl;
-                    input_file_2.close();
                 }
+                input_file_2.close();
                 output_file << endl;
                 cur_day++;
                 counter = 0;
-                output_file << "Day " << cur_day << ": " ;
             }
 
         }
 
         for (it = sites_hurghada.begin(); it!= sites_hurghada.end();it++){
             if (*it && counter < 2){
-                ifstream input_file("Itineraries/Data/h" +string(1,*it)+ ".txt");
+                input_file.open("Itineraries/Data/h" +string(1,*it)+ ".txt");
                 getline(input_file, line);
                 if (counter == 0){
                     act_1 = "h" + string(1,*it);
                     output_file << line;
+                    output_file << "Day " << cur_day << ": " ;
                 }
                 else if (counter == 1){
                     act_2 = "h" + string (1,*it);
@@ -223,41 +227,41 @@ void itinerary::generate_itinerary(string file_nom){
                 input_file.close();
             }
             if (counter==2){
-                ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
-                ifstream input_file_2("Itineraries/Data/" + act_2 + ".txt");
+                input_file_1.open("Itineraries/Data/" + act_1 + ".txt");
+                input_file_2.open("Itineraries/Data/" + act_2 + ".txt");
                 getline(input_file_1,line);
                 getline(input_file_2,line);
                 while (getline(input_file_1,line)){
                     output_file << line << endl;
-                    input_file_1.close();
                 }
+                input_file_1.close();
+                output_file << endl;
                 while (getline(input_file_2,line)){
                     output_file << line << endl;
-                    input_file_2.close();
                 }
+                input_file_2.close();
                 output_file << endl;
                 cur_day++;
                 counter = 0;
-                output_file << "Day " << cur_day << ": " ;
             }
 
         }
         if (counter == 1){
             //just insert day and increment cur_day
             output_file << endl;
-            ifstream input_file_1("Itineraries/Data/" + act_1 + ".txt");
+            input_file_1.open("Itineraries/Data/" + act_1 + ".txt");
             getline(input_file_1,line);
             while (getline(input_file_1,line)){
                     output_file << line << endl;
-                    input_file_1.close();
             }
+            input_file_1.close();
             output_file << endl;
             cur_day ++;
         }
 
         // insert departure text
         output_file << "Day " << tot_days << ": Departure" << endl;
-        ifstream input_file("Itineraries/Data/departure.txt");
+        input_file.open("Itineraries/Data/departure.txt");
         if (input_file.is_open()&&output_file.is_open()){
             while (getline(input_file, line)){
                 output_file << line << endl;
@@ -298,7 +302,7 @@ void itinerary::generate_itinerary(string file_nom){
         */
         output_file << endl;
 
-        ifstream input_file("Itineraries/Data/exclusions.txt");
+        input_file.open("Itineraries/Data/exclusions.txt");
         if (input_file.is_open()&&output_file.is_open()){
             while (getline(input_file, line)){
                 output_file << line << endl;
@@ -330,7 +334,7 @@ int itinerary::calculate_days(){
     // instead.
     // also find way to print messagge that number of activities will not fit time window you indicated. 
     if (num_of_days%2 == 0){return num_of_days/2 +2;}
-    else {return num_of_days/2;+3;}
+    else {return num_of_days/2+3;}
 }
 
 
@@ -419,7 +423,7 @@ void itinerary::set_date(){
         cout << "--------------------\n";
 
         do {
-            cout << "Year: \n";
+            cout << "Year: ";
             cin >> year_e;
             if (year_e<2023){
                 cout << "Please Enter A Valid Year.\n";
@@ -442,7 +446,7 @@ void itinerary::set_date(){
         flag = 0;
 
         do {
-            cout << "Month: \n";
+            cout << "Month: ";
             cin >> month_e;
             if (month_e>0 && month_e<13){
                 if (year_e==year_s){
@@ -471,7 +475,7 @@ void itinerary::set_date(){
         flag = 0;
 
         do {
-            cout << "Day: \n";
+            cout << "Day: ";
             cin >> day_e;
             // consider making this a seperate function.
             if (day_e<1||day_e>31){
@@ -496,19 +500,22 @@ void itinerary::set_date(){
             }
             else if (month_e==month_s+1||(month_e==1&&month_s==12)){
                 if (month_s == 4 || month_s == 6 || month_s == 9 || month_s == 11){
-                    if (30-day_s+day_e >= 3){
+                    if ((30-day_s+day_e >= 3) && (30-day_s+day_e < 30)){
                         flag = 1;
                     }
                 }
                 else if (month_s==2){
-                    if (28-day_s+day_e >=3){
+                    if ((28-day_s+day_e >=3)&&(28-day_s+day_e <30)){
+                        flag = 1;
+                    }
+                }
+                else if (month_s!=2) {
+                    if ((31-day_s+day_e>=3)&&(31-day_s+day_e<30)){
                         flag = 1;
                     }
                 }
                 else {
-                    if (31-day_s+day_e>=3){
-                        flag = 1;
-                    }
+                    cout << "Invalid Day. Please Try Again.\n";
                 }
                 
             }
@@ -546,7 +553,7 @@ void itinerary::set_date(){
     cout << "---------------------------------------\n";
     cout << month_s << "/" << day_s << "/" << year_s << endl;
     cout << "and\n";
-    cout << month_s << "/" << day_s << "/" << year_s << endl;
+    cout << month_e << "/" << day_e << "/" << year_e << endl;
     // consider doing while loop for all of the above.
 }
 
@@ -676,7 +683,7 @@ void itinerary::choose_sites(){
 int itinerary::valid_string(string sites, int max_length, int length){
     if (length <= max_length){
     for(string::iterator it = sites.begin(); it!=sites.end();it++){
-        if (*it<48 || *it> (length+48)){
+        if (*it<48 || *it> (max_length+48)){
             return 0;
         }
     }
@@ -689,11 +696,12 @@ int itinerary::valid_string(string sites, int max_length, int length){
 void itinerary::view_itinerary(){
     string line;
     ifstream file;
-    file.open("/Itineraries/"+file_name);
+    file.open("Itineraries/"+file_name);
 
     if (file.is_open()){
     while (getline(file,line)){
         cout << line;
+        cout << endl;
     }
     }
     else {
@@ -706,8 +714,8 @@ void itinerary::purchase_itinerary(){
 
     int input;
     int flag = 0;
-    int credit_num, sec_code, exp_date;
-    string email;
+    int credit_num, sec_code;
+    string email, exp_date;
 
     do {
     cout << "Choose method of payment: \n";
@@ -717,8 +725,8 @@ void itinerary::purchase_itinerary(){
     cout << "To quit, press 9" << endl;
 
     cin >> input;
-
-    if (input == 1){
+    if (input == 9){return;}
+    else if (input == 1){
         flag = 1;
         cout << "Please Enter your credit card number: " << endl;
         cin >> credit_num;
@@ -730,17 +738,18 @@ void itinerary::purchase_itinerary(){
         cin >> email;
         cout << "Thank you for your payment. You will recieve a confirmation email shortly." << endl;
     }
-    if (input == 2){
+    else if (input == 2){
+        flag = 1;
         cout << "Redirecting you to PayPal..." << endl;
         sleep(6);
         cout << "Thank you for your payment." << endl;
     }
-    if (input == 3){
+    else if (input == 3){
+        flag = 1;
         cout << "Redirecting you to a secure website..." << endl;
         sleep(6);
         cout << "Thank you for your payment." << endl;
     }
-    if (input == 9){return;}
     else {cout << "Invalid Input." << endl;}
     } while (!flag);
 
@@ -749,7 +758,7 @@ void itinerary::purchase_itinerary(){
 void itinerary::refund_itinerary(){
     int input;
     cout << "Are you sure you want to request a refund?"<<endl;
-    cout << "Press 1 if yes.\nPress 9 to cancel and quit";
+    cout << "Press 1 if yes.\nPress 9 to cancel and quit\n";
     cin >> input;
     do {
     if (input == 1){
@@ -765,7 +774,7 @@ void itinerary::refund_itinerary(){
 }
 
  // base 1200 + count number of days of itinerary x 300 
-int itinerary::calculate_price(){
+void itinerary::calculate_price(){
 
     int price=1200;
     int word_counter=0;
@@ -775,7 +784,7 @@ int itinerary::calculate_price(){
     string word;
     ifstream file;
 
-    file.open("/Itineraries/"+file_name);
+    file.open("Itineraries/"+file_name);
     while (1){
     file >> word;
     if (word == "Departure"){break;}
@@ -783,18 +792,18 @@ int itinerary::calculate_price(){
     }
     file.close();
 
-    file.open("/Itineraries/"+file_name);
+    file.open("Itineraries/"+file_name);
     for (i=0;i<word_counter;i++){file >> word;}
-    first_digit = word[0];
+    first_digit = word[0]-48;
     if (word[1]<58 && word[1]>47){
-        second_digit=word[1];
+        second_digit=word[1]-48;
         }
     
     price = price + 250 *(first_digit+second_digit);
 
     price_of_itinerary = price;
 
-    cout << "The Total Cost For This Trip With All Inclusions Listed in";
+    cout << "The Total Cost For This Trip With All Inclusions Listed in ";
     cout << "the Itinerary Will be: $" << price << "." << endl;
 
 }
@@ -802,7 +811,7 @@ int itinerary::calculate_price(){
 // returns 1 if file exists
 int itinerary::file_existence_check(string file_of_itinerary){
     ifstream file;
-    file.open("/Itinerary/"+file_of_itinerary);
+    file.open("Itineraries/"+file_of_itinerary);
     if (file.is_open()){
         file.close();
         return 1;
@@ -820,6 +829,8 @@ void itinerary::set_file_name(string file_){
 /* Other Functions */
 
 void listfiles(string folder){
-    for (const auto & entry : filesystem::directory_iterator(folder))
-        cout << entry.path() << endl;
+    for (const auto & file : __fs::filesystem::directory_iterator(folder))
+        if (file.is_regular_file()){
+            cout << file.path().filename() << endl;
+        }
 }
