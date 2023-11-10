@@ -3,6 +3,7 @@
 There is something about technologies such as supercomputers, AI, and quantum computing that gets me hooked. I start speculating and imagining the possibilities of what a world would look like where these technologies have been developed to their very limit. What I mean by this ‘limit’ is to imagine these technologies exponentially improving. What would the world look like then? What would these technologies’ be capable of doing?
 
 ![image (5)](https://github.com/bakryH/bakry/assets/112026956/3b808c76-099f-4bef-952c-c7e0c88916ff)
+<h1>Used title as input to Stable Diffusion</h1>
 
 ## An example of an answer
 -------------------------
