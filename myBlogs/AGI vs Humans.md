@@ -1,4 +1,4 @@
-<p style="text-align: center;">AGI vs Humanst</p>
+# <p style="text-align: center;">AGI vs Humans</p>
 
 For the past few millennia, humans have completely dominated the Earth. About 10,000 years ago, we yielded the power of nature with the discovery of agriculture. A few thousand years later, we unlocked access to traversing the seven oceans with the invention of sailing. A few more thousand years later, many innovations and advancements in technology started to appear with the emergence of large civilizations like Mesopotamia, Ancient Egypt, and the early Chinese civilization. Architecture, medicine, art, religion, law, science, mathematics, literacy, all started becoming actual words. 
 
