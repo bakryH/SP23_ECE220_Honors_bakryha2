@@ -1,7 +1,5 @@
 ## About me and this Repository
 
-Firstly, thanks for stopping by! I hope you have had the chance to explore around here. But if not, no worries. This repository contains 2 folders so far, one for my coding projects, and another for a blog where I talk about all sorts of things (still a work in progress). There is also a copy of my resume, and then this file. 
+Hello! My name is Bakry (pronounced back-ree), and I am currently a sophomore pursuing a Bachelor of Science in Computer Engineering at the University of Illinois Urbana Champaign (UIUC). I am originally from Egypt, and I came to the US in the summer of 2022 to learn from one of the worlds top educational institutions. With the education, experience, and lessons I learn from living here, I am hoping to be able to contribute good to as many people as possible.
 
-More about me now. My name is Bakry (pronounced back-ree), and I am an Egyptian student who is currently a sophomore studying computer engineering at the University of Illinois Urbana Champaign (UIUC). I came to the US with the vision of hopefully contributing good to as many people as possible. While I am still exploring the means of doing this, I know that I will work my very hardest to achieve this goal.
-
-Also, feel free to contact me with any questions or ideas; check out my resume for my contact information!
+This repository is pretty simple so far; it contains two folders, one for my coding projects, and another for a blog where I talk about all sorts of things. 
